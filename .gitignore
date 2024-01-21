@@ -1,0 +1,35 @@
+# Ambiente virtual
+.venv/
+
+# Banco de dados SQLite
+instance/database.db
+
+# Arquivos e diretórios específicos para Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+
+# Configurações específicas de IDEs
+.vscode/
+.idea/
+
+# Arquivos de ambiente
+.env
+
+# Dependências e build de pacotes
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+dist/
+build/
+*.egg-info/
+
+# Cache do pytest
+pytest_cache/
+.pytest_cache/
