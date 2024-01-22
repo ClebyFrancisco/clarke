@@ -17,9 +17,9 @@ def suppliers():
 
         consumption_param = request.args.get('consumption')
 
-        if consumption_param is not None and consumption_param.isdigit():
+        if consumption_param and consumption_param.isdigit():
             consumption = float(consumption_param)
-            suppliers_list = suppliers_list.where(Supplier.min_kwh_limit > consumption)
+            suppliers_list = suppliers_list.where(Supplier.min_kwh_limit < consumption)
 
         suppliers = [
             {
@@ -41,7 +41,9 @@ def suppliers():
             logo=data.get('logo', None),
             state=data['state'],
             min_kwh_limit=data['min_kwh_limit'],
-            kwh_cost=data['kwh_cost']
+            kwh_cost=data['kwh_cost'],
+            rating=data['rating'],
+            total_customers=data['total_customers']
         )
         return jsonify({'message': 'Supplier created successfully'}), 201
 
