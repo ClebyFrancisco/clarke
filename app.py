@@ -1,9 +1,18 @@
 import json
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+from flask_migrate import Migrate
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+CORS(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
 class Supplier(db.Model):
@@ -13,7 +22,7 @@ class Supplier(db.Model):
     state = db.Column(db.String(2), nullable=False)
     min_kwh_limit= db.Column(db.Float, nullable=False)
     kwh_cost = db.Column(db.Float, nullable=False)
-    rating = db.Column(db.String, nullable=True, default="[]")
+    rating = db.Column(db.Float, nullable=True, default=0)
     total_customers = db.Column(db.Integer, nullable=True, default=0)
     
 
@@ -21,6 +30,12 @@ class Supplier(db.Model):
 def suppliers():
     if request.method == 'GET':
         suppliers_list = Supplier.query.all()
+        
+        consumption_param = request.args.get('consumption')
+    
+        if consumption_param is not None and consumption_param.isdigit():
+            consumption = float(consumption_param)
+            suppliers_list = [supplier for supplier in suppliers_list if supplier.min_kwh_limit > consumption]
         suppliers = [
             {
             'id': supplier.id, 
@@ -83,3 +98,5 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True, host='0.0.0.0')
+
+migrate = Migrate(app, db)

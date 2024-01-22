@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  database:
+    image: postgres
+    container_name: clkdb
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=clkdb
+      - POSTGRES_DB=clkdb
+    volumes:
+      - pgdata:/data/postgres
+  testDatabase:
+    image: postgres
+    container_name: clkdb_test
+    restart: always
+    ports:
+      - 5444:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=clkdb_test
+      - POSTGRES_DB=clkdb_test
+    volumes:
+      - pgdata:/data/postgres
+
+
+volumes:
+  pgdata:
+    driver: local
