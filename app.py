@@ -6,7 +6,7 @@ from database import pg_db, Supplier
 
 
 app = Flask(__name__)
-
+CORS(app)
 pg_db.connect()
 pg_db.create_tables([Supplier])
 
