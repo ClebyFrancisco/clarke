@@ -137,7 +137,9 @@ function Banner() {
               </div>
             </Form>
           </FormikProvider>
-          {!isGetSuplliers && <EmptyContent title="" />}
+          {!isGetSuplliers && (
+            <EmptyContent title="Explore as opções mais vantajosas para você!" />
+          )}
           {isGetSuplliers && suplliers.length === 0 && (
             <EmptyContent title="Infelizmente, não encontramos fornecedores que atendam às suas necessidades no momento!" />
           )}
@@ -148,7 +150,7 @@ function Banner() {
             >
               <img
                 className="w-full sm:w-1/3 h-32 object-cover"
-                src="/clk.png"
+                src={i.logo ? i.logo : "/clk.png"}
                 alt="Logo da Empresa"
               />
 
