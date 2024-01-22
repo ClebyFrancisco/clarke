@@ -11,7 +11,8 @@ load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+# testando hardcode db
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://clkdb_user:H8PYlGLc60UowALkOhO00czkaN60Q09D@dpg-cmn7rpun7f5s73eun79g-a.oregon-postgres.render.com/clkdb"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
